@@ -1,0 +1,7 @@
+export type PersonalProfileCreateInput = {
+  githubLink?: string | null;
+  codeforcesProfile?: string | null;
+  codechefProfile?: string | null;
+  atcoderProfile?: string | null;
+  bio?: string | null;
+};

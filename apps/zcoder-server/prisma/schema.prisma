@@ -1,0 +1,82 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Bookmark {
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  questionId Int?
+  timestamp  DateTime?
+  user       String?
+}
+
+model PersonalProfile {
+  id                String   @id @default(cuid())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  githubLink        String?
+  codeforcesProfile String?
+  codechefProfile   String?
+  atcoderProfile    String?
+  bio               String?
+}
+
+model Solution {
+  id           String    @id @default(cuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  user         String?
+  questionId   Int?
+  solutionText String?
+  timestamp    DateTime?
+  comments     Comment[]
+}
+
+model CodeEditor {
+  id                  String   @id @default(cuid())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  editorId            Int?
+  programmingLanguage String?
+  codeContent         String?
+}
+
+model Room {
+  id           String                 @id @default(cuid())
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  roomName     String?
+  description  String?
+  participants EnumRoomParticipants[]
+}
+
+model CodingContest {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  contestName String?
+  startTime   DateTime?
+  endTime     DateTime?
+  platform    String?
+}
+
+model Comment {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  commentText String?
+  timestamp   DateTime?
+  user        String?
+  solution    Solution? @relation(fields: [solutionId], references: [id])
+  solutionId  String?
+}
+
+enum EnumRoomParticipants {
+  Option1
+}
